@@ -191,7 +191,7 @@ public class DmmParsingProfile extends SiteParsingProfile implements SpecificPro
 
 		//dvd mode
 		Element plotElement = document.select("p.mg-b20").first();
-		if (plotElement == null || document.baseUri().contains("/digital/video")  || document.baseUri().contains("/digital/nikkatsu")) {
+		if (plotElement == null || document.baseUri().contains("/digital/video")) {
 			//video rental mode if it didnt find a match using above method
 			plotElement = document.select("tbody .mg-b20.lh4").first();
 		}
@@ -682,7 +682,7 @@ public class DmmParsingProfile extends SiteParsingProfile implements SpecificPro
 			//so for now I'm making each its own variable and looping through and adding in all the elements seperately
 			Elements dvdLinks = searchResultsPage.select("p.tmb a[href*=/mono/dvd/");
 			Elements rentalElements = searchResultsPage.select("p.tmb a[href*=/rental/ppr/");
-			Elements digitalElements = searchResultsPage.select("p.tmb a[href*=/digital/videoa/], p.tmb a[href*=/digital/videoc/], p.tmb a[href*=/digital/nikkatsu/]");
+			Elements digitalElements = searchResultsPage.select("p.tmb a[href*=/digital/videoa/], p.tmb a[href*=/digital/videoc/]");
 
 			//get /mono/dvd links
 			for (int i = 0; i < dvdLinks.size(); i++) {
@@ -777,8 +777,8 @@ public class DmmParsingProfile extends SiteParsingProfile implements SpecificPro
 			else {
 
 				//setup cookie to bypass age check on DMM site
-				Map<String, String> cookies = new HashMap<String, String>();
-				cookies.put("age_check_done", "1");
+				Map<String, String> cookies = new HashMap<String,String>();
+				cookies.put("age_check_done","1");
 
 				Document doc = Jsoup.connect(searchResult.getUrlPath()).cookies(cookies).userAgent("Mozilla").ignoreHttpErrors(true).timeout(CONNECTION_TIMEOUT_VALUE).get();
 				return doc;
